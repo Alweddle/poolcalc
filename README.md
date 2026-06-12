@@ -36,7 +36,7 @@
 
 ## 🚀 Utilisation
 
-**En ligne** — [poolcalc.vercel.app](https://poolcalc.vercel.app)
+**En ligne** — [poolcalc.vercel.app](https://poolcalc-beta.vercel.app)
 
 **En local**
 ```bash

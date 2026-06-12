@@ -1,60 +1,44 @@
-# 🏊 PoolCalc
+# 🏊 PoolCalc — Calculatrice Piscine
 
-<div align="center">
+> Calculatrice intelligente pour piscine hors-sol · Volume · Paramètres eau · Corrections · Dosages précis
 
-**Calculatrice intelligente pour piscine hors-sol**  
-*Volume · Paramètres eau · Corrections · Dosages précis*
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://github.com/Alweddle/poolcalc)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://github.com/Alweddle/poolcalc)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/Alweddle/poolcalc)
-[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://poolcalc.vercel.app)
-
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-poolcalc.vercel.app-1a6bff?style=for-the-badge)](https://poolcalc.vercel.app)
-[![GitHub stars](https://img.shields.io/github/stars/Alweddle/poolcalc?style=for-the-badge&color=gold)](https://github.com/Alweddle/poolcalc/stargazers)
-
-</div>
-
----
-
-## 📸 Aperçu
-
-> Application web statique — aucune installation, aucun serveur, fonctionne sur tous les appareils 📱💻
+**👉 [poolcalc.vercel.app](https://poolcalc.vercel.app)**
 
 ---
 
 ## ✨ Fonctionnalités
 
-| | Fonctionnalité | Description |
-|---|---|---|
-| 📐 | **Calcul du volume** | Rond, rectangulaire, ovale — résultat en litres et m³ |
-| ⏱️ | **Durée de filtration** | Calcul automatique selon la température de l'eau |
-| 🧪 | **Analyse des paramètres** | Chlore, pH, TAC, Stabilisant |
-| 💊 | **Dosages précis** | Corrections en grammes selon votre volume exact |
-| 🔴🟠🟢 | **Indicateurs visuels** | État immédiat de chaque paramètre |
-| 💡 | **Conseils contextuels** | Recommandations personnalisées selon les relevés |
-| 📱 | **100% Mobile** | Utilisable depuis le bord de la piscine |
+- 📐 **Calcul du volume** — rond, rectangulaire, ovale — résultat en litres et m³
+- ⏱️ **Durée de filtration** — calcul automatique selon la température
+- 🧪 **Analyse des paramètres** — Chlore, pH, TAC, Stabilisant
+- 💊 **Dosages précis** — corrections en grammes selon votre volume exact
+- 🔴🟠🟢 **Indicateurs visuels** — état immédiat de chaque paramètre
+- 💡 **Conseils contextuels** — recommandations selon vos relevés
+- 📱 **100% Mobile** — utilisable depuis le bord de la piscine
 
 ---
 
 ## 🧪 Paramètres analysés
 
-| Paramètre | Plage idéale | ⚠️ Risque si hors plage |
+| Paramètre | Plage idéale | Risque si hors plage |
 |---|---|---|
-| 🟦 **Chlore libre** | 1 – 3 mg/L | Eau trouble, algues, bactéries |
-| 🔵 **pH** | 7.2 – 7.4 | Chlore inefficace, irritations cutanées |
-| 🟣 **TAC** | 80 – 120 mg/L | pH instable, corrosion du matériel |
-| ☀️ **Stabilisant** | 30 – 50 mg/L | Chlore détruit par le soleil en 2h |
+| 🟦 Chlore libre | 1 – 3 mg/L | Eau trouble, algues, bactéries |
+| 🔵 pH | 7.2 – 7.4 | Chlore inefficace, irritations |
+| 🟣 TAC | 80 – 120 mg/L | pH instable, corrosion |
+| ☀️ Stabilisant | 30 – 50 mg/L | Chlore détruit par le soleil en 2h |
 
 ---
 
 ## 🚀 Utilisation
 
-### En ligne (recommandé)
-👉 **[poolcalc.vercel.app](https://poolcalc.vercel.app)**  
-Accessible depuis n'importe quel appareil, HTTPS, aucune installation.
+**En ligne** — [poolcalc.vercel.app](https://poolcalc.vercel.app)
 
-### En local
+**En local**
 ```bash
 git clone https://github.com/Alweddle/poolcalc.git
 cd poolcalc
@@ -65,68 +49,50 @@ open index.html
 
 ---
 
-## 📁 Structure du projet
+## 📁 Structure
 
 ```
 poolcalc/
-├── 📄 index.html        # Application complète (HTML + CSS + JS)
-└── 📖 README.md         # Documentation
+├── index.html    # Application complète
+└── README.md
 ```
 
 ---
 
 ## 🗺️ Roadmap
 
-### v1.0 — ✅ En ligne
-- [x] Calcul du volume (rond, rectangulaire, ovale)
+### v1.0 ✅ En ligne
+- [x] Calcul du volume
 - [x] Analyse des 4 paramètres eau
 - [x] Corrections avec dosages précis
-- [x] Conseils contextuels
 - [x] Design mobile-first
 
-### v2.0 — 📋 Planifié
-- [ ] Backend **FastAPI + SQLite** hébergé sur Proxmox
-- [ ] **Historique** des relevés avec courbes d'évolution
-- [ ] **Multi-piscines** — gérez plusieurs bassins
-- [ ] **Indicateur qualité global** 🟢🟠🔴
-- [ ] **Dashboard** connecté à l'API REST
+### v2.0 📋 Planifié
+- [ ] Backend FastAPI + SQLite sur Proxmox
+- [ ] Historique des relevés avec courbes
+- [ ] Multi-piscines
+- [ ] Indicateur qualité global 🟢🟠🔴
+- [ ] Dashboard connecté à l'API REST
 
 ---
 
-## 🛠️ Stack technique
+## 🛠️ Stack
 
-### v1.0 — Actuelle
-| Couche | Technologie |
-|---|---|
-| Frontend | HTML5 · CSS3 · JavaScript vanilla |
-| Hébergement | Vercel (HTTPS automatique) |
-
-### v2.0 — Cible
-| Couche | Technologie |
-|---|---|
-| Frontend | HTML5 · CSS3 · JavaScript vanilla |
-| Hébergement frontend | Vercel |
-| Backend API | Python · FastAPI |
-| Base de données | SQLite |
-| Infra | LXC Debian sur Proxmox VE 9.0.3 |
+| | v1.0 | v2.0 |
+|---|---|---|
+| Frontend | HTML · CSS · JS vanilla | HTML · CSS · JS vanilla |
+| Hébergement | Vercel | Vercel |
+| Backend | — | Python FastAPI |
+| BDD | — | SQLite |
+| Infra | — | LXC sur Proxmox VE 9.0.3 |
 
 ---
 
 ## 👤 Auteur
 
-<div align="center">
-
-**Alexandre Chrétien**  
+**Alexandre Chrétien** — [@Alweddle](https://github.com/Alweddle)  
 Chef de Projet Tech & Data · ERP · BI · Homelab enthusiast
-
-[![GitHub](https://img.shields.io/badge/GitHub-Alweddle-181717?style=for-the-badge&logo=github)](https://github.com/Alweddle)
-
-</div>
 
 ---
 
-<div align="center">
-
 *Fait avec ☀️ pour ne plus jamais rater un relevé de piscine*
-
-</div>

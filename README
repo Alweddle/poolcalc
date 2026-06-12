@@ -1,0 +1,99 @@
+# 🏊 PoolCalc
+
+> Calculatrice & conseils pour piscine hors-sol — volume, paramètres eau, corrections et dosages
+
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
+
+---
+
+## 📋 Description
+
+PoolCalc est une application web statique pour gérer facilement l'entretien d'une piscine hors-sol. Elle permet de calculer le volume d'eau, d'analyser les paramètres de l'eau et d'obtenir les corrections précises avec les dosages en grammes.
+
+---
+
+## ✨ Fonctionnalités
+
+- 📐 **Calcul du volume** — rond, rectangulaire, ovale
+- ⏱️ **Durée de filtration** recommandée selon la température
+- 🧪 **Analyse des paramètres** — Chlore libre, pH, TAC, Stabilisant
+- 💊 **Dosages précis** en grammes selon le volume de votre piscine
+- 🔴🟠🟢 **Indicateurs visuels** de l'état de l'eau
+- 💡 **Conseils contextuels** selon les relevés
+- 📱 **Compatible mobile** — utilisable depuis le bord de la piscine
+
+---
+
+## 🚀 Utilisation
+
+### En ligne
+👉 [poolcalc.vercel.app](https://poolcalc.vercel.app) *(à configurer)*
+
+### En local
+```bash
+# Cloner le repo
+git clone https://github.com/Alweddle/poolcalc.git
+
+# Ouvrir directement dans le navigateur
+open index.html
+```
+
+Aucune dépendance, aucun serveur — c'est du HTML/CSS/JS pur.
+
+---
+
+## 📁 Structure
+
+```
+poolcalc/
+├── index.html        # Application complète (HTML + CSS + JS)
+└── README.md         # Documentation
+```
+
+---
+
+## 🧪 Paramètres analysés
+
+| Paramètre | Plage idéale | Risque si hors plage |
+|---|---|---|
+| **Chlore libre** | 1 – 3 mg/L | Eau trouble, algues, bactéries |
+| **pH** | 7.2 – 7.4 | Chlore inefficace, irritations |
+| **TAC** | 80 – 120 mg/L | pH instable, corrosion |
+| **Stabilisant** | 30 – 50 mg/L | Chlore détruit par le soleil en 2h |
+
+---
+
+## 🔭 Roadmap
+
+- [ ] **v2.0** — Backend FastAPI + SQLite sur Proxmox
+- [ ] **v2.0** — Historique des relevés avec courbes
+- [ ] **v2.0** — Multi-piscines
+- [ ] **v2.0** — Indicateur qualité 🟢🟠🔴 global
+- [ ] **v2.0** — Dashboard Vercel connecté à l'API
+
+---
+
+## 🛠️ Stack technique
+
+| Composant | Technologie |
+|---|---|
+| Frontend | HTML5 / CSS3 / JavaScript vanilla |
+| Hébergement | Vercel |
+| Backend *(v2)* | Python FastAPI |
+| Base de données *(v2)* | SQLite |
+| Infra *(v2)* | LXC sur Proxmox VE 9.0.3 |
+
+---
+
+## 👤 Auteur
+
+**Alexandre Chrétien** — [@Alweddle](https://github.com/Alweddle)
+
+---
+
+## 📄 Licence
+
+MIT — libre d'utilisation et de modification

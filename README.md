@@ -7,7 +7,7 @@
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**👉 [poolcalc.vercel.app](https://poolcalc.vercel.app)**
+**👉 [poolcalc.vercel.app](https://poolcalc-beta.vercel.app)**
 
 ---
 

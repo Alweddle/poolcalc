@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoolCalc — Calculatrice Piscine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+  :root {
+    --blue: #1a6bff;
+    --blue-light: #e8f0ff;
+    --teal: #00c9b1;
+    --teal-light: #e0faf7;
+    --orange: #ff6b2b;
+    --orange-light: #fff0e8;
+    --red: #e53e3e;
+    --red-light: #fff5f5;
+    --green: #22c55e;
+    --green-light: #f0fdf4;
+    --yellow: #f59e0b;
+    --yellow-light: #fffbeb;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --text: #1a202c;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0a3d8f 0%, #1a6bff 60%, #00c9b1 100%);
+    padding: 28px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -100px; right: -80px;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -60px; left: 40px;
+  }
+
+  .header-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+  main {
+    max-width: 680px;
+    margin: -40px auto 0;
+    padding: 0 16px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title .icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .icon-blue { background: var(--blue-light); }
+  .icon-teal { background: var(--teal-light); }
+  .icon-orange { background: var(--orange-light); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input[type="number"], select {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color 0.2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--blue);
+    background: white;
+  }
+
+  .volume-display {
+    background: linear-gradient(135deg, var(--blue-light), var(--teal-light));
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .volume-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .volume-value { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--blue); }
+
+  .filtration-info {
+    background: var(--teal-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #0e7a6e;
+    font-weight: 500;
+  }
+
+  .params-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .param-input {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .param-input:hover { border-color: var(--border); }
+
+  .param-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .param-range {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .btn-analyse {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blue), #0a4fd4);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(26,107,255,0.35);
+    letter-spacing: 0.2px;
+  }
+
+  .btn-analyse:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26,107,255,0.45);
+  }
+
+  .btn-analyse:active { transform: translateY(0); }
+
+  /* Results */
+  #results { display: none; }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .score-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .score-ok { background: var(--green-light); color: var(--green); border: 2px solid var(--green); }
+  .score-warn { background: var(--yellow-light); color: var(--yellow); border: 2px solid var(--yellow); }
+  .score-bad { background: var(--red-light); color: var(--red); border: 2px solid var(--red); }
+
+  .correction-item {
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .correction-ok { background: var(--green-light); border-left: 3px solid var(--green); }
+  .correction-warn { background: var(--yellow-light); border-left: 3px solid var(--yellow); }
+  .correction-bad { background: var(--red-light); border-left: 3px solid var(--red); }
+
+  .correction-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  .correction-param {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .correction-value {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .correction-action {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .correction-dose {
+    display: inline-block;
+    background: white;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin-top: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .filtration-result {
+    background: linear-gradient(135deg, #0a3d8f, #1a6bff);
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .filtration-result .label { font-size: 13px; opacity: 0.8; }
+  .filtration-result .value { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; }
+  .filtration-result .unit { font-size: 14px; opacity: 0.8; }
+
+  .tips-list { list-style: none; }
+  .tips-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    gap: 10px;
+  }
+  .tips-list li:last-child { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-urgent { background: var(--red-light); color: var(--red); }
+  .badge-soon { background: var(--yellow-light); color: var(--yellow); }
+  .badge-ok { background: var(--green-light); color: var(--green); }
+
+  @media (max-width: 480px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .params-grid { grid-template-columns: 1fr; }
+    .header-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">🏊 PoolCalc</div>
+  <div class="header-sub">Calculatrice & conseils pour votre piscine</div>
+  <div class="wave"></div>
+</header>
+
+<main>
+
+  <!-- Configuration piscine -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon icon-blue">📐</div>
+      Configuration de la piscine
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Forme</label>
+        <select id="shape" onchange="calcVolume()">
+          <option value="round">Ronde</option>
+          <option value="rect">Rectangulaire</option>
+          <option value="oval">Ovale</option>
+        </select>
+      </div>
+      <div class="form-group" id="grp-diam">
+        <label>Diamètre (m)</label>
+        <input type="number" id="diameter" value="5.5" step="0.1" min="1" oninput="calcVolume()">
+      </div>
+      <div class="form-group" id="grp-length" style="display:none">
+        <label>Longueur (m)</label>
+        <input type="number" id="length" value="8" step="0.1" min="1" oninput="calcVolume()">
+      </div>
+      <div class="form-group" id="grp-width" style="display:none">
+        <label>Largeur (m)</label>
+        <input type="number" id="width" value="4" step="0.1" min="1" oninput="calcVolume()">
+      </div>
+      <div class="form-group">
+        <label>Hauteur d'eau (m)</label>
+        <input type="number" id="waterHeight" value="1.05" step="0.05" min="0.1" oninput="calcVolume()">
+      </div>
+      <div class="form-group">
+        <label>Température eau (°C)</label>
+        <input type="number" id="temperature" value="20" step="1" min="0" max="40" oninput="calcVolume()">
+      </div>
+    </div>
+    <div class="volume-display">
+      <div>
+        <div class="volume-label">Volume d'eau estimé</div>
+        <div class="volume-value" id="volumeDisplay">24 900 L</div>
+      </div>
+      <div style="text-align:right">
+        <div class="volume-label">Soit</div>
+        <div style="font-size:18px;font-weight:700;color:var(--teal)" id="volumeM3">24.9 m³</div>
+      </div>
+    </div>
+    <div class="filtration-info" id="filtrationInfo">
+      ⏱️ Durée de filtration recommandée : <strong id="filtrationHours">10h/jour</strong> (température ÷ 2)
+    </div>
+  </div>
+
+  <!-- Relevé des paramètres -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon icon-teal">🧪</div>
+      Relevé des paramètres
+    </div>
+    <div class="params-grid">
+      <div class="param-input">
+        <div class="param-label">Chlore libre</div>
+        <input type="number" id="chlore" placeholder="ex: 1.5" step="0.1" min="0" max="20">
+        <div class="param-range">Idéal : 1 – 3 mg/L</div>
+      </div>
+      <div class="param-input">
+        <div class="param-label">pH</div>
+        <input type="number" id="ph" placeholder="ex: 7.4" step="0.1" min="0" max="14">
+        <div class="param-range">Idéal : 7.2 – 7.4</div>
+      </div>
+      <div class="param-input">
+        <div class="param-label">TAC (mg/L)</div>
+        <input type="number" id="tac" placeholder="ex: 80" step="5" min="0" max="500">
+        <div class="param-range">Idéal : 80 – 120 mg/L</div>
+      </div>
+      <div class="param-input">
+        <div class="param-label">Stabilisant (mg/L)</div>
+        <input type="number" id="stabilisant" placeholder="ex: 40" step="5" min="0" max="200">
+        <div class="param-range">Idéal : 30 – 50 mg/L</div>
+      </div>
+    </div>
+    <button class="btn-analyse" onclick="analyse()" style="margin-top:18px">
+      🔍 Analyser & calculer les corrections
+    </button>
+  </div>
+
+  <!-- Résultats -->
+  <div id="results">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-orange">📊</div>
+        Résultats de l'analyse
+      </div>
+
+      <div class="filtration-result">
+        <div>
+          <div class="label">Filtration recommandée</div>
+          <div class="value" id="res-filtration">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="label">par jour</div>
+          <div class="unit">heures</div>
+        </div>
+      </div>
+
+      <div id="corrections"></div>
+    </div>
+
+    <div class="card" id="tips-card">
+      <div class="card-title">
+        <div class="icon icon-teal">💡</div>
+        Conseils du jour
+      </div>
+      <ul class="tips-list" id="tips"></ul>
+    </div>
+  </div>
+
+</main>
+
+<script>
+let volumeLiters = 24900;
+
+document.getElementById('shape').addEventListener('change', function() {
+  const shape = this.value;
+  document.getElementById('grp-diam').style.display = shape === 'round' ? '' : 'none';
+  document.getElementById('grp-length').style.display = shape !== 'round' ? '' : 'none';
+  document.getElementById('grp-width').style.display = shape !== 'round' ? '' : 'none';
+  calcVolume();
+});
+
+function calcVolume() {
+  const shape = document.getElementById('shape').value;
+  const h = parseFloat(document.getElementById('waterHeight').value) || 1.05;
+  const temp = parseFloat(document.getElementById('temperature').value) || 20;
+  let vol = 0;
+
+  if (shape === 'round') {
+    const d = parseFloat(document.getElementById('diameter').value) || 5.5;
+    vol = Math.PI * Math.pow(d/2, 2) * h;
+  } else if (shape === 'rect') {
+    const l = parseFloat(document.getElementById('length').value) || 8;
+    const w = parseFloat(document.getElementById('width').value) || 4;
+    vol = l * w * h;
+  } else {
+    const l = parseFloat(document.getElementById('length').value) || 8;
+    const w = parseFloat(document.getElementById('width').value) || 4;
+    vol = Math.PI * (l/2) * (w/2) * h;
+  }
+
+  volumeLiters = Math.round(vol * 1000);
+  document.getElementById('volumeDisplay').textContent = volumeLiters.toLocaleString('fr-FR') + ' L';
+  document.getElementById('volumeM3').textContent = (volumeLiters/1000).toFixed(1) + ' m³';
+
+  const filtH = Math.max(4, Math.round(temp / 2));
+  document.getElementById('filtrationHours').textContent = filtH + 'h/jour';
+}
+
+function analyse() {
+  const temp = parseFloat(document.getElementById('temperature').value) || 20;
+  const chlore = parseFloat(document.getElementById('chlore').value);
+  const ph = parseFloat(document.getElementById('ph').value);
+  const tac = parseFloat(document.getElementById('tac').value);
+  const stab = parseFloat(document.getElementById('stabilisant').value);
+  const vol = volumeLiters;
+  const filtH = Math.max(4, Math.round(temp / 2));
+
+  let corrections = [];
+  let tips = [];
+
+  // Chlore
+  if (!isNaN(chlore)) {
+    if (chlore < 0.5) {
+      const dose = Math.round((vol / 1000) * 30); // ~30g/m³ choc chlore
+      corrections.push({
+        status: 'bad',
+        param: 'Chlore libre',
+        value: chlore + ' mg/L',
+        action: 'Choc chlore urgent',
+        dose: dose + 'g de chlore choc (le soir, soleil couché)',
+        badge: 'urgent'
+      });
+    } else if (chlore < 1) {
+      const dose = Math.round((vol / 1000) * 15);
+      corrections.push({
+        status: 'warn',
+        param: 'Chlore libre',
+        value: chlore + ' mg/L (un peu bas)',
+        action: 'Augmenter légèrement',
+        dose: dose + 'g de chlore',
+        badge: 'soon'
+      });
+    } else if (chlore > 5) {
+      corrections.push({
+        status: 'warn',
+        param: 'Chlore libre',
+        value: chlore + ' mg/L (trop élevé)',
+        action: 'Ne pas se baigner — attendre que le taux redescende naturellement',
+        badge: 'soon'
+      });
+    } else {
+      corrections.push({ status: 'ok', param: 'Chlore libre', value: chlore + ' mg/L ✓', badge: 'ok' });
+    }
+  }
+
+  // pH
+  if (!isNaN(ph)) {
+    if (ph < 7.0) {
+      const dose = Math.round((vol / 1000) * 15 * (7.2 - ph) / 0.2);
+      corrections.push({
+        status: 'bad',
+        param: 'pH',
+        value: ph + ' (trop bas)',
+        action: 'Ajouter du pH+ (soude)',
+        dose: dose + 'g de pH+',
+        badge: 'urgent'
+      });
+    } else if (ph < 7.2) {
+      const dose = Math.round((vol / 1000) * 10);
+      corrections.push({
+        status: 'warn',
+        param: 'pH',
+        value: ph + ' (légèrement bas)',
+        action: 'Ajouter du pH+',
+        dose: dose + 'g de pH+',
+        badge: 'soon'
+      });
+    } else if (ph > 7.6) {
+      const dose = Math.round((vol / 1000) * 15 * (ph - 7.4) / 0.2);
+      corrections.push({
+        status: 'bad',
+        param: 'pH',
+        value: ph + ' (trop élevé — chlore inefficace !)',
+        action: 'Ajouter du pH- (acide)',
+        dose: dose + 'g de pH-',
+        badge: 'urgent'
+      });
+    } else if (ph > 7.4) {
+      const dose = Math.round((vol / 1000) * 8);
+      corrections.push({
+        status: 'warn',
+        param: 'pH',
+        value: ph + ' (légèrement élevé)',
+        action: 'Ajouter un peu de pH-',
+        dose: dose + 'g de pH-',
+        badge: 'soon'
+      });
+    } else {
+      corrections.push({ status: 'ok', param: 'pH', value: ph + ' ✓', badge: 'ok' });
+    }
+  }
+
+  // TAC
+  if (!isNaN(tac)) {
+    if (tac < 60) {
+      const dose = Math.round((vol / 10000) * 150 * (100 - tac) / 10);
+      corrections.push({
+        status: 'bad',
+        param: 'TAC (Alcalinité)',
+        value: tac + ' mg/L (trop bas)',
+        action: 'Ajouter du TAC+',
+        dose: dose + 'g de TAC+ (en 2 fois à 24h d\'intervalle)',
+        badge: 'urgent'
+      });
+    } else if (tac < 80) {
+      const dose = Math.round((vol / 10000) * 150 * (90 - tac) / 10);
+      corrections.push({
+        status: 'warn',
+        param: 'TAC (Alcalinité)',
+        value: tac + ' mg/L (un peu bas)',
+        action: 'Ajouter du TAC+',
+        dose: dose + 'g de TAC+',
+        badge: 'soon'
+      });
+    } else if (tac > 150) {
+      corrections.push({
+        status: 'warn',
+        param: 'TAC (Alcalinité)',
+        value: tac + ' mg/L (élevé)',
+        action: 'Partiellement vidanger et renouveler l\'eau',
+        badge: 'soon'
+      });
+    } else {
+      corrections.push({ status: 'ok', param: 'TAC (Alcalinité)', value: tac + ' mg/L ✓', badge: 'ok' });
+    }
+  }
+
+  // Stabilisant
+  if (!isNaN(stab)) {
+    if (stab < 15) {
+      const dose = Math.round((vol / 1000) * 40); // 40g/m³ pour monter à ~40mg/L
+      corrections.push({
+        status: 'bad',
+        param: 'Stabilisant (Cyanurique)',
+        value: stab + ' mg/L (insuffisant — le soleil détruit le chlore !)',
+        action: 'Ajouter du stabilisant acide cyanurique',
+        dose: dose + 'g de stabilisant',
+        badge: 'urgent'
+      });
+    } else if (stab < 30) {
+      const dose = Math.round((vol / 1000) * (30 - stab));
+      corrections.push({
+        status: 'warn',
+        param: 'Stabilisant (Cyanurique)',
+        value: stab + ' mg/L (bas)',
+        action: 'Compléter le stabilisant',
+        dose: dose + 'g de stabilisant',
+        badge: 'soon'
+      });
+    } else if (stab > 75) {
+      corrections.push({
+        status: 'warn',
+        param: 'Stabilisant (Cyanurique)',
+        value: stab + ' mg/L (trop élevé)',
+        action: 'Renouveler partiellement l\'eau (20% du volume)',
+        badge: 'soon'
+      });
+    } else {
+      corrections.push({ status: 'ok', param: 'Stabilisant (Cyanurique)', value: stab + ' mg/L ✓', badge: 'ok' });
+    }
+  }
+
+  // Tips contextuels
+  tips.push({ icon: '⏱️', text: `Filtrer <strong>${filtH}h/jour</strong> à ${temp}°C (température ÷ 2).` });
+
+  if (!isNaN(chlore) && chlore < 1 && !isNaN(stab) && stab < 30) {
+    tips.push({ icon: '☀️', text: 'Sans stabilisant, le soleil détruit 100% du chlore en 2h. <strong>Priorité absolue.</strong>' });
+  }
+  if (!isNaN(ph) && ph > 7.5 && !isNaN(chlore) && chlore < 1) {
+    tips.push({ icon: '⚠️', text: 'Votre pH élevé rend le chlore quasi inactif. Corrigez le pH <strong>avant</strong> d\'ajouter du chlore.' });
+  }
+  tips.push({ icon: '🌙', text: 'Ajoutez toujours le chlore <strong>le soir après 20h</strong> (soleil couché) pour éviter la dégradation UV.' });
+  tips.push({ icon: '🧹', text: 'Nettoyez le préfiltre de la pompe toutes les semaines et faites un contre-lavage quand la pression dépasse 1.5 bar.' });
+
+  // Rendu
+  const corrDiv = document.getElementById('corrections');
+  corrDiv.innerHTML = corrections.map(c => `
+    <div class="correction-item correction-${c.status}">
+      <div class="correction-icon">${c.status === 'ok' ? '✅' : c.status === 'warn' ? '⚠️' : '🔴'}</div>
+      <div style="flex:1">
+        <div class="correction-param">${c.param} <span class="badge badge-${c.badge || c.status}">${c.badge || c.status}</span></div>
+        <div class="correction-value">${c.value}</div>
+        ${c.action ? `<div class="correction-action">${c.action}</div>` : ''}
+        ${c.dose ? `<div class="correction-dose">→ ${c.dose}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('res-filtration').textContent = filtH;
+
+  document.getElementById('tips').innerHTML = tips.map(t => `
+    <li><span style="font-size:18px">${t.icon}</span><span>${t.text}</span></li>
+  `).join('');
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Init
+calcVolume();
+</script>
+</body>
+</html>
